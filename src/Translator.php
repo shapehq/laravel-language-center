@@ -77,7 +77,7 @@ class Translator extends LaravelTranslator
         // Ignore items that are not in the correct format, example: "__('Not found')".
         // Correct format for that would be "__('errors.not_found')".
         if (strpos($key, '.') === false) {
-            return $data;
+            return parent::get(is_string($data) ? $data : $key, $replace, $locale, $fallback);
         }
 
         if (!isset($string)) {
