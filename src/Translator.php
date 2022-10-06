@@ -74,6 +74,12 @@ class Translator extends LaravelTranslator
 
         $key = trim(str_replace([' '], ['_'], strtolower(trim($key))));
 
+        // Ignore items that are not in the correct format, example: "__('Not found')".
+        // Correct format for that would be "__('errors.not_found')".
+        if (strpos($key, '.') === false) {
+            return $data;
+        }
+
         if (!isset($string)) {
             $string = $key;
         }
@@ -279,7 +285,7 @@ class Translator extends LaravelTranslator
         if (!$this->enabled()) {
             return;
         }
-        
+
         if ($platform == null) {
             $platform = $this->getDefaultPlatform();
         }
